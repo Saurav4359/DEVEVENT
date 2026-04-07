@@ -1,7 +1,5 @@
 import ExploreBtn from "./components/ExploreBtn";
 
- 
-
 export default function Page() {
   return (
    <>
