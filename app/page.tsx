@@ -1,5 +1,12 @@
+import EventCard from "./components/EventCard";
 import ExploreBtn from "./components/ExploreBtn";
 
+
+const Events = [
+  {image : '/images/event1.png', title : 'Event 1'},
+    {image : '/images/event2.png', title : 'Event 2'},
+
+]
 export default function Page() {
   return (
    <>
@@ -11,8 +18,8 @@ export default function Page() {
       <h3>Featured Events</h3>
       <ul className="events">
         {
-          [1,2,3,4,5].map((event)=> (
-            <li key={event}> Event {event}</li>
+          Events.map((event)=> (
+            <li key={event.title}> <EventCard {... event}/></li>
           ))
         }
       </ul>
