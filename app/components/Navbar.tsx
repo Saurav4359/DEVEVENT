@@ -12,7 +12,7 @@ function Navbar() {
       <nav>
         <Link href="/" className="logo">
           <img src="/icons/logo.png" alt="logo" width={24} height={24} />
-          <p>DevEvent</p>
+          <p>DevLoop</p>
         </Link>
         <ul>
           <Link href="/" onClick={() => handleNavClick('Home')}>Home</Link>
