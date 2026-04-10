@@ -1,7 +1,8 @@
 import BookEvent from "@/app/components/bookEvent";
-import { Divide } from "lucide-react";
+import EventCard from "@/app/components/EventCard";
+import { IEvent } from "@/database/event.model";
+import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
 import { notFound } from "next/navigation";
-import React from "react";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
 const EventDetailsItem = ({
@@ -66,6 +67,8 @@ const EventDetailsPage = async ({
     return notFound();
   }
    const bookings = 10;
+
+   const similarEvents : IEvent[] = await getSimilarEventsBySlug(slug!);
   return (
     <section id="event">
       <div className="header">
@@ -137,6 +140,14 @@ const EventDetailsPage = async ({
           <BookEvent/>
          </div>
         </aside>
+      </div>
+
+      <div className="flex w-full flex-col gap-4 pt-20 "> <h2>Similar Events</h2>
+      <div className="events"> 
+        {similarEvents.length > 0 && similarEvents.map((similarEvents: IEvent)=> (
+       <EventCard key={similarEvents.title} {...similarEvents}/>
+        ))}
+      </div>
       </div>
     </section>
   );

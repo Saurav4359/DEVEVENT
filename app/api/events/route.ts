@@ -2,7 +2,6 @@ import { v2 as cloudinary } from "cloudinary";
 import { Event } from "@/database";
 import connectDB from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
-import { rejects } from "assert";
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
@@ -21,6 +20,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    let tags = JSON.parse(formData.get('tags') as string);
+    let agenda = JSON.parse(formData.get('agenda') as string);
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     const uploadResult = await new Promise((resolve, reject) => {
@@ -35,7 +37,9 @@ export async function POST(req: NextRequest) {
         .end(buffer);
     });
     event.image = (uploadResult as { secure_url: string }).secure_url;
-    const createdEvents = await Event.create(event);
+    const createdEvents = await Event.create({...event, tags :tags, agenda : agenda});
+
+
     NextResponse.json(
       { message: "Event created successfully", event: createdEvents },
       { status: 201 },
